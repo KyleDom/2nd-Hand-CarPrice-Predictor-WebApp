@@ -12,8 +12,8 @@ export const carBrands = [
       "Explore the world of wheels. Click to unveil a gallery of exceptional cars and dive into the thrill of automotive excellence.",
   },
   {
-    brand: "Geely",
-    image: "geely.jpeg",
+    brand: "Mitsubishi",
+    image: "mitsubishi.png",
     description:
       "Explore the world of wheels. Click to unveil a gallery of exceptional cars and dive into the thrill of automotive excellence.",
   },
