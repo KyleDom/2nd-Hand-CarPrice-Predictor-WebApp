@@ -2,12 +2,47 @@ import Head from "next/head";
 import { Navbar } from "../../components/Navbar";
 import { useState } from "react";
 import Dropdown from "@/components/Dropdown";
+import { Footer } from "@/components/Footer";
+import {
+  bodyType,
+  brand,
+  color,
+  locations,
+  model,
+  transmission,
+} from "@/data/checkCarPrice";
 
 const CheckCarPrice = () => {
-  const [selectedBrand, setSelectedBrand] = useState("Select Car Brand");
+  const [selectedBrand, setSelectedBrand] = useState("Select option");
+  const [selectedModel, setSelectedModel] = useState("Select option");
+  const [selectedAgeOfCar, setSelectedAgeOfCar] = useState("Select option");
+  const [selectedBodyType, setSelectedBodyType] = useState("Select option");
+  const [selectedColor, setSelectedColor] = useState("Select option");
+  const [selectedLocation, setSelectedLocation] = useState("Select option");
+  const [selectedRetailPrice, setSelectedRetailPrice] =
+    useState("Select option");
+  const [selectedPosterType, setSelectedPosterType] = useState("Select option");
+  const [selectedFuelType, setSelectedFuelType] = useState("Select option");
+  const [selectedTransmission, setSelectedTransmission] =
+    useState("Select option");
+  const [selectedMileage, setSelectedMileage] = useState("Select option");
 
-  const handleBrandSelection = (brand: string) => {
-    setSelectedBrand(brand);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log({
+      selectedBrand,
+      selectedModel,
+      selectedAgeOfCar,
+      selectedBodyType,
+      selectedColor,
+      selectedLocation,
+      selectedRetailPrice,
+      selectedPosterType,
+      selectedFuelType,
+      selectedTransmission,
+      selectedMileage,
+    });
   };
 
   return (
@@ -21,34 +56,193 @@ const CheckCarPrice = () => {
       <Navbar />
 
       <div
-        className="bg-contain min-h-screen flex justify-center items-center"
+        className="bg-contain min-h-screen flex justify-center items-center pb-12"
         style={{
           backgroundImage: "url('hero-bg.png')",
           backgroundSize: "100% 100%",
         }}
       >
-        <div className="max-w-[1350px]">
-          <div className="text-white pt-24 flex-col text-center">
-            <div className="md:text-4xl text-2xl sm:text-3xl font-semibold uppercase">
-              Check your <span className="text-[#FF7A00] mr-2">car price</span>
-              and know its value
-            </div>
+        <form onSubmit={handleSubmit}>
+          <div className="max-w-[1350px]">
+            <div className="text-white pt-24 flex-col text-center">
+              <div className="md:text-4xl text-2xl sm:text-3xl font-semibold uppercase">
+                Calculate the
+                <span className="text-[#FF7A00] mr-2"> value</span>
+                of your car
+              </div>
 
-            <div className="bg-white w-[1350px] h-[500px] rounded-2xl shadow mt-8">
-              <div className="flex-col pt-8 text-left ml-8 font-medium text-gray-800">
-                Brand of your Car
-                <Dropdown
-                  width="80"
-                  label={selectedBrand}
-                  options={["Toyota", "Geely", "Honda"]}
-                  onSelect={handleBrandSelection}
-                  optionWidth="80"
-                />
+              <div className="bg-white w-[1200px] h-[800px] rounded-sm shadow mt-8 ">
+                <div className="text-left text-3xl mx-10 pt-10 underline text-[#FF7A00]">
+                  Car Details
+                </div>
+
+                <div className="flex items-center justify-center ">
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Brand
+                    <Dropdown
+                      width="80"
+                      label={selectedBrand}
+                      options={brand}
+                      onSelect={setSelectedBrand}
+                      optionWidth="80"
+                    />
+                  </div>
+
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Model
+                    <Dropdown
+                      width="80"
+                      label={selectedModel}
+                      options={model[selectedBrand] || []}
+                      onSelect={setSelectedModel}
+                      optionWidth="80"
+                    />
+                  </div>
+
+                  <div className="flex-col pt-4 text-left mx-10 font-medium text-gray-800">
+                    <p> Age of Car </p>
+                    <input
+                      type="number"
+                      min={1}
+                      max={100}
+                      placeholder="Enter the age of your car"
+                      className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
+                      value={selectedAgeOfCar}
+                      onChange={(e) => setSelectedAgeOfCar(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center ">
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Body Type
+                    <Dropdown
+                      width="80"
+                      label={selectedBodyType}
+                      options={bodyType}
+                      onSelect={setSelectedBodyType}
+                      optionWidth="80"
+                    />
+                  </div>
+
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Color
+                    <Dropdown
+                      width="80"
+                      label={selectedColor}
+                      options={color}
+                      onSelect={setSelectedColor}
+                      optionWidth="80"
+                    />
+                  </div>
+
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Location
+                    <Dropdown
+                      width="80"
+                      label={selectedLocation}
+                      options={locations}
+                      onSelect={setSelectedLocation}
+                      optionWidth="80"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-center ">
+                  <div className="flex-col pt-4 text-left mx-10 font-medium text-gray-800">
+                    <p> Retail Price </p>
+                    <input
+                      type="number"
+                      placeholder="Enter a number"
+                      className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
+                      value={selectedRetailPrice}
+                      onChange={(e) => setSelectedRetailPrice(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Poster Type
+                    <Dropdown
+                      width="80"
+                      label={selectedPosterType}
+                      options={["Individual", "Dealer"]}
+                      onSelect={setSelectedPosterType}
+                      optionWidth="80"
+                    />
+                  </div>
+                </div>
+
+                <div className="text-left text-3xl mx-10 pt-10 underline text-[#FF7A00]">
+                  Engine Details
+                </div>
+
+                <div className="flex items-center justify-center ">
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Fuel Type
+                    <Dropdown
+                      width="80"
+                      label={selectedFuelType}
+                      options={[
+                        "Gasoline",
+                        "Diesel",
+                        "Electric",
+                        "No Fuel Type",
+                      ]}
+                      onSelect={setSelectedFuelType}
+                      optionWidth="80"
+                    />
+                  </div>
+
+                  <div className="flex-col pt-6 text-left mx-10 font-medium text-gray-800">
+                    Transmission
+                    <Dropdown
+                      width="80"
+                      label={selectedTransmission}
+                      options={transmission}
+                      onSelect={setSelectedTransmission}
+                      optionWidth="80"
+                    />
+                  </div>
+
+                  <div className="flex-col pt-2 text-left mx-10 font-medium text-gray-800">
+                    <div> Mileage </div>
+                    <input
+                      type="number"
+                      placeholder="Enter the mileage in km"
+                      className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
+                      value={selectedMileage}
+                      onChange={(e) => setSelectedMileage(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="text-left text-3xl mx-10 pt-10 underline text-[#FF7A00]">
+                  Predicted Car Price
+                </div>
+
+                <div className="flex items-center">
+                  <div className="rounded-lg bg-gray-100 border border-gray-200 w-[600px] h-28 mt-6 ml-10 text-left">
+                    <div className="text-gray-500 mt-2 ml-2 uppercase">
+                      Estimated Value:
+                    </div>
+                    <div className="text-5xl ml-4 mt-2 text-black font-bold">
+                      ₱1,600,200
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="cursor-pointer hover:bg-[rgb(255,106,0)] mt-5 items-center rounded-lg h-12 w-40 bg-[#FF7A00] text-white ml-10 font-semibold"
+                  >
+                    ESTIMATE
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
+
+      <Footer />
     </>
   );
 };

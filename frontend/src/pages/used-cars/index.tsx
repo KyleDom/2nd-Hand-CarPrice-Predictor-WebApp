@@ -5,10 +5,11 @@ import { IoLocationSharp } from "react-icons/io5";
 import FilterByCategory from "@/components/Filter";
 import { RiSearchLine } from "react-icons/ri";
 import { useState, SetStateAction } from "react";
+import { Footer } from "@/components/Footer";
 
 const UsedCars = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Categories");
+  const [selectedCategory, setSelectedCategory] = useState("Brand");
   const [isCategoryListOpen, setIsCategoryListOpen] = useState(false);
 
   const toggleCategoryList = () => {
@@ -55,13 +56,12 @@ const UsedCars = () => {
         </div>
       </div>
 
-      <div className="mt-6 mb-2 flex items-center justify-center">
+      <div className="mt-6 mb-12 flex items-center justify-center">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {usedCars
             .filter(
               (card) =>
-                selectedCategory === "Categories" ||
-                card.brand === selectedCategory
+                selectedCategory === "Brand" || card.brand === selectedCategory
             )
             .filter((card) =>
               card.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -96,6 +96,7 @@ const UsedCars = () => {
             ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

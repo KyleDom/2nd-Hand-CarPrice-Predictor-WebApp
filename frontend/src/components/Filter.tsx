@@ -1,20 +1,7 @@
+import { brand } from "@/data/checkCarPrice";
+import { FilteredCategoriesProps } from "@/types/filter";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
-
-type FilteredCategoriesProps = {
-  selectedCategory: string;
-  isCategoryListOpen: boolean;
-  toggleCategoryList: () => void;
-  handleCategorySelect: (status: string) => void;
-};
-
-const categoryOptions = [
-  "Honda",
-  "Toyota",
-  "Isuzu",
-  "Geely",
-  "Ford"
-];
 
 const FilterByCategory = ({
   selectedCategory,
@@ -35,7 +22,7 @@ const FilterByCategory = ({
       </div>
       {isCategoryListOpen && (
         <div className="absolute left-0 mt-2 max-h-52 w-60 overflow-y-auto border border-gray-500 bg-white">
-          {categoryOptions.map((option, index) => (
+          {brand.map((option, index) => (
             <div
               key={index}
               className="cursor-pointer p-2 hover:bg-gray-200"

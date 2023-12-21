@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Navbar } from "../../components/Navbar";
 import { teamImages } from "@/data/teamImages";
+import { Footer } from "@/components/Footer";
 
 const AboutUs = () => {
   return (
@@ -96,6 +97,7 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

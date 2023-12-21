@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaSortDown } from "react-icons/fa";
 
-interface DropdownProps {
+export interface DropdownProps {
   width: string;
   label: string;
   options: string[];
@@ -37,7 +37,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       </button>
       {isDropdownOpen && (
         <div
-          className={`absolute mt-2 bg-white rounded-sm border border-gray-800 w-${optionWidth}`}
+          className={`absolute mt-2 bg-white rounded-sm border border-gray-800 w-${optionWidth} max-h-40 overflow-y-auto`}
         >
           {options.map((option, index) => (
             <div
