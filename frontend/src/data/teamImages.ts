@@ -5,7 +5,7 @@ export const teamImages = [
     
   },
   {
-    image: "raf.png",
+    image: "raf.jpg",
     name: "RAFAEL PRUDENTE",
   },
   {

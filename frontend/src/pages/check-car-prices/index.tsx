@@ -30,19 +30,39 @@ const CheckCarPrice = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log({
-      selectedBrand,
-      selectedModel,
-      selectedAgeOfCar,
-      selectedBodyType,
-      selectedColor,
-      selectedLocation,
-      selectedRetailPrice,
-      selectedPosterType,
-      selectedFuelType,
-      selectedTransmission,
-      selectedMileage,
-    });
+    const apiUrl = "https://example.com/api/checkCarPrice";
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          selectedBrand,
+          selectedModel,
+          selectedAgeOfCar,
+          selectedBodyType,
+          selectedColor,
+          selectedLocation,
+          selectedRetailPrice,
+          selectedPosterType,
+          selectedFuelType,
+          selectedTransmission,
+          selectedMileage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+      console.log("Fetched data:", data);
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
