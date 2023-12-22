@@ -1,6 +1,6 @@
 import { BrandModelMap } from "@/types/model";
 
-export const brand = [
+export const brandData = [
   'Chevrolet', 'Ford', 'Honda', 'Isuzu', 'Hyundai', 'Mitsubishi', 'Nissan',
   'Toyota', 'BMW', 'Mazda', 'Kia', 'Audi', 'Lexus', 'Mercedes-Benz', 'Subaru',
   'Suzuki', 'Jeep', 'Porsche', 'Ssangyong', 'Volkswagen', 'Land Rover', 'Bmw',
@@ -10,7 +10,7 @@ export const brand = [
   'Mahindra', 'Aston Martin', 'Lotus'
 ].sort();
 
-export const model: BrandModelMap = 
+export const modelData: BrandModelMap = 
 {
   'Aston Martin': ['DB11'],
   'Audi': ['A1', 'A4', 'A8', 'RS5', 'S3', 'TT'],
@@ -99,24 +99,24 @@ export const model: BrandModelMap =
   'Volvo': ['S40', 'S60', 'S80', 'S90', 'V40', 'V60', 'V90', 'XC40', 'XC60', 'XC70', 'XC90']
 }
 
-export const bodyType = [
+export const bodyTypeData = [
   'Saloon / Sedan', 'SUV', 'MPV / AUV', 'Coupe / Sports Car', 'Pickup / Truck',
   'Hatchback / Wagon', 'Van / Minivan / Minibus',
   'Cabriolet / Convertible / Roadster'
 ].sort();
 
-export const color = [
+export const colorData = [
   'No Color', 'Brown', 'White', 'Black', 'Silver', 'Blue', 'Red', 'Grey', 'Beige',
   'Orange', 'Green', 'Purple', 'Yellow', 'Grayblack', 'Brightsilver',
   'Pearlwhite', 'Skyblue', 'Golden', 'Pink', 'Silver / Grey', 'Gold',
   'Purple / Pink'
 ].sort();
 
-export const transmission = [
+export const transmissionData = [
   'Automatic', 'Shiftable Automatic', 'Manual', 'Automanual', 'Cvt'
 ]
 
-export const locations = ['Paranaque', 'Manila', 'Quezon City', 'Makati', 'Legazpi', 'Norzagaray',
+export const locationData = ['Paranaque', 'Manila', 'Quezon City', 'Makati', 'Legazpi', 'Norzagaray',
 'Antipolo', 'Cebu City', 'Caloocan', 'Angeles', 'Las Pinas', 'Davao City',
 'Agoo', 'Carmona', 'Tarlac City', 'San Fernando', 'San Juan', 'Lemery',
 'Compostela', 'Calumpit', 'Taguig', 'Santiago', 'Cagayan de Oro', 'Liloan',

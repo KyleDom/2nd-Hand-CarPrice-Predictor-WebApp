@@ -4,33 +4,31 @@ import { useState } from "react";
 import Dropdown from "@/components/Dropdown";
 import { Footer } from "@/components/Footer";
 import {
-  bodyType,
-  brand,
-  color,
-  locations,
-  model,
-  transmission,
+  bodyTypeData,
+  brandData,
+  colorData,
+  locationData,
+  modelData,
+  transmissionData,
 } from "@/data/checkCarPrice";
 
 const CheckCarPrice = () => {
-  const [selectedBrand, setSelectedBrand] = useState("Select option");
-  const [selectedModel, setSelectedModel] = useState("Select option");
-  const [selectedAgeOfCar, setSelectedAgeOfCar] = useState("Select option");
-  const [selectedBodyType, setSelectedBodyType] = useState("Select option");
-  const [selectedColor, setSelectedColor] = useState("Select option");
-  const [selectedLocation, setSelectedLocation] = useState("Select option");
-  const [selectedRetailPrice, setSelectedRetailPrice] =
-    useState("Select option");
-  const [selectedPosterType, setSelectedPosterType] = useState("Select option");
-  const [selectedFuelType, setSelectedFuelType] = useState("Select option");
-  const [selectedTransmission, setSelectedTransmission] =
-    useState("Select option");
-  const [selectedMileage, setSelectedMileage] = useState("Select option");
+  const [brand, setBrand] = useState("Select option");
+  const [model, setModel] = useState("Select option");
+  const [ageOfCar, setAgeOfCar] = useState("Select option");
+  const [bodyType, setBodyType] = useState("Select option");
+  const [color, setColor] = useState("Select option");
+  const [location, setLocation] = useState("Select option");
+  const [retailPrice, setRetailPrice] = useState("Select option");
+  const [posterType, setPosterType] = useState("Select option");
+  const [fuelType, setFuelType] = useState("Select option");
+  const [transmission, setTransmission] = useState("Select option");
+  const [mileage, setMileage] = useState("Select option");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const apiUrl = "https://example.com/api/checkCarPrice";
+    const apiUrl = "https://jsonplaceholder.typicode.com/posts";
 
     try {
       const response = await fetch(apiUrl, {
@@ -39,17 +37,17 @@ const CheckCarPrice = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          selectedBrand,
-          selectedModel,
-          selectedAgeOfCar,
-          selectedBodyType,
-          selectedColor,
-          selectedLocation,
-          selectedRetailPrice,
-          selectedPosterType,
-          selectedFuelType,
-          selectedTransmission,
-          selectedMileage,
+          brand,
+          model,
+          ageOfCar,
+          bodyType,
+          color,
+          location,
+          retailPrice,
+          posterType,
+          fuelType,
+          transmission,
+          mileage,
         }),
       });
 
@@ -59,7 +57,6 @@ const CheckCarPrice = () => {
 
       const data = await response.json();
       console.log("Fetched data:", data);
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -101,9 +98,9 @@ const CheckCarPrice = () => {
                     Brand
                     <Dropdown
                       width="80"
-                      label={selectedBrand}
-                      options={brand}
-                      onSelect={setSelectedBrand}
+                      label={brand}
+                      options={brandData}
+                      onSelect={setBrand}
                       optionWidth="80"
                     />
                   </div>
@@ -112,9 +109,9 @@ const CheckCarPrice = () => {
                     Model
                     <Dropdown
                       width="80"
-                      label={selectedModel}
-                      options={model[selectedBrand] || []}
-                      onSelect={setSelectedModel}
+                      label={model}
+                      options={modelData[brand] || []}
+                      onSelect={setModel}
                       optionWidth="80"
                     />
                   </div>
@@ -125,10 +122,11 @@ const CheckCarPrice = () => {
                       type="number"
                       min={1}
                       max={100}
+                      name="ageOfCar"
                       placeholder="Enter the age of your car"
                       className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
-                      value={selectedAgeOfCar}
-                      onChange={(e) => setSelectedAgeOfCar(e.target.value)}
+                      value={ageOfCar}
+                      onChange={(e) => setAgeOfCar(e.target.value)}
                     />
                   </div>
                 </div>
@@ -138,9 +136,9 @@ const CheckCarPrice = () => {
                     Body Type
                     <Dropdown
                       width="80"
-                      label={selectedBodyType}
-                      options={bodyType}
-                      onSelect={setSelectedBodyType}
+                      label={bodyType}
+                      options={bodyTypeData}
+                      onSelect={setBodyType}
                       optionWidth="80"
                     />
                   </div>
@@ -149,9 +147,9 @@ const CheckCarPrice = () => {
                     Color
                     <Dropdown
                       width="80"
-                      label={selectedColor}
-                      options={color}
-                      onSelect={setSelectedColor}
+                      label={color}
+                      options={colorData}
+                      onSelect={setColor}
                       optionWidth="80"
                     />
                   </div>
@@ -160,9 +158,9 @@ const CheckCarPrice = () => {
                     Location
                     <Dropdown
                       width="80"
-                      label={selectedLocation}
-                      options={locations}
-                      onSelect={setSelectedLocation}
+                      label={location}
+                      options={locationData}
+                      onSelect={setLocation}
                       optionWidth="80"
                     />
                   </div>
@@ -173,10 +171,11 @@ const CheckCarPrice = () => {
                     <p> Retail Price </p>
                     <input
                       type="number"
+                      name="retailPrice"
                       placeholder="Enter a number"
                       className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
-                      value={selectedRetailPrice}
-                      onChange={(e) => setSelectedRetailPrice(e.target.value)}
+                      value={retailPrice}
+                      onChange={(e) => setRetailPrice(e.target.value)}
                     />
                   </div>
 
@@ -184,9 +183,9 @@ const CheckCarPrice = () => {
                     Poster Type
                     <Dropdown
                       width="80"
-                      label={selectedPosterType}
+                      label={posterType}
                       options={["Individual", "Dealer"]}
-                      onSelect={setSelectedPosterType}
+                      onSelect={setPosterType}
                       optionWidth="80"
                     />
                   </div>
@@ -201,14 +200,14 @@ const CheckCarPrice = () => {
                     Fuel Type
                     <Dropdown
                       width="80"
-                      label={selectedFuelType}
+                      label={fuelType}
                       options={[
                         "Gasoline",
                         "Diesel",
                         "Electric",
                         "No Fuel Type",
                       ]}
-                      onSelect={setSelectedFuelType}
+                      onSelect={setFuelType}
                       optionWidth="80"
                     />
                   </div>
@@ -217,9 +216,9 @@ const CheckCarPrice = () => {
                     Transmission
                     <Dropdown
                       width="80"
-                      label={selectedTransmission}
-                      options={transmission}
-                      onSelect={setSelectedTransmission}
+                      label={transmission}
+                      options={transmissionData}
+                      onSelect={setTransmission}
                       optionWidth="80"
                     />
                   </div>
@@ -228,10 +227,11 @@ const CheckCarPrice = () => {
                     <div> Mileage </div>
                     <input
                       type="number"
+                      name="mileage"
                       placeholder="Enter the mileage in km"
                       className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
-                      value={selectedMileage}
-                      onChange={(e) => setSelectedMileage(e.target.value)}
+                      value={mileage}
+                      onChange={(e) => setMileage(e.target.value)}
                     />
                   </div>
                 </div>
