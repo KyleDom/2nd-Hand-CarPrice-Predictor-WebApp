@@ -25,21 +25,22 @@ const CheckCarPrice = () => {
   const [fuel_type, setFuelType] = useState("Select option");
   const [transmission, setTransmission] = useState("Select option");
   const [mileage_in_km, setMileage] = useState("Select option");
+  const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formComplete = isFormComplete(
+     const formComplete = isFormComplete(
       brand,
       model,
-      age_of_car,
-      body_type,
+      transmission,
       color,
-      location,
-      retail,
+      body_type,
       poster_type,
       fuel_type,
-      transmission,
+      location,
+      retail,  
+      age_of_car,
       mileage_in_km
     );
 
@@ -48,9 +49,8 @@ const CheckCarPrice = () => {
       return;
     }
 
-    const apiUrl = "https://jsonplaceholder.typicode.com/posts";
     try {
-      const response = await fetch(apiUrl, {
+      const response = await fetch('/api/predictPrice', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,14 +58,14 @@ const CheckCarPrice = () => {
         body: JSON.stringify({
           brand,
           model,
-          age_of_car: parseFloat(age_of_car),
-          body_type,
+          transmission,
           color,
-          location,
-          retail: parseFloat(retail),
+          body_type,
           poster_type,
           fuel_type,
-          transmission,
+          location,
+          retail: parseFloat(retail),   
+          age_of_car: parseFloat(age_of_car),
           mileage_in_km: parseFloat(mileage_in_km),
         }),
       });
@@ -76,6 +76,8 @@ const CheckCarPrice = () => {
 
       const data = await response.json();
       console.log("Fetched data:", data);
+
+      setEstimatedPrice(data.price);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -265,7 +267,7 @@ const CheckCarPrice = () => {
                       Estimated Value:
                     </div>
                     <div className="text-5xl ml-4 mt-2 text-black font-bold">
-                      ₱1,600,200
+                    ₱{estimatedPrice?.toLocaleString()}
                     </div>
                   </div>
 

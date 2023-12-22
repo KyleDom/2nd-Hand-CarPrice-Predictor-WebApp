@@ -3,9 +3,11 @@ import pickle
 import pandas as pd
 import numpy as np
 import json
+from flask_cors import CORS
 
 # Flask app
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
  
 with open("trained_model.pkl", "rb") as f:
     model = pickle.load(f)
@@ -20,8 +22,6 @@ with open("encoding_maps.json", "r") as f:
     posterType_encoding = encoding_maps["poster_type"]
     fuelType_encoding = encoding_maps["fuel_type"]
     location_encoding = encoding_maps["location"]
-
-
 
 @app.route("/")
 def hello():
@@ -48,8 +48,12 @@ def predict_price():
     data_df = pd.DataFrame(data, index=[0])
     predicted_price = model.predict(data_df) 
     result = np.exp(predicted_price)
-    return jsonify({"price": result[0]})   
-    
+    response = jsonify({"price": result[0]})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    response.headers.add("Access-Control-Allow-Methods", "OPTIONS,POST")
+
+    return response 
 
 if __name__ == "__main__":
     app.run(debug=True)
