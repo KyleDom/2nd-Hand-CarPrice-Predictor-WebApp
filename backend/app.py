@@ -1,46 +1,55 @@
 from flask import Flask, request, jsonify
 import pickle
 import pandas as pd
+import numpy as np
+import json
 
 # Flask app
 app = Flask(__name__)
-
-preprocessed_data = pd.read_csv("usedcars.csv")
-
+ 
 with open("trained_model.pkl", "rb") as f:
     model = pickle.load(f)
+with open("encoding_maps.json", "r") as f:
+    encoding_maps = json.load(f)
 
-# API endpoint for price prediction
+    brand_encoding = encoding_maps["brand"]
+    model_encoding = encoding_maps["model"]
+    transmission_encoding = encoding_maps["transmission"]
+    color_encoding = encoding_maps["color"]
+    bodyType_encoding = encoding_maps["body_type"]
+    posterType_encoding = encoding_maps["poster_type"]
+    fuelType_encoding = encoding_maps["fuel_type"]
+    location_encoding = encoding_maps["location"]
+
+
+
+@app.route("/")
+def hello():
+    return "Hello, server is runninggggg!"
+
 @app.route("/predict-price", methods=["POST"])
 def predict_price():
-    if request.method == "POST":
-        try:
-            
-            user_data = request.get_json()
+    
+    data = request.get_json()
 
-            attributes = ["brand", "model", "transmission", "color", "body_type", "poster_type", "fuel_type", "location", "retail", "post_age_in_days", "age_of_car", "mileage_in_km"]
+    data["brand"] = brand_encoding[data["brand"]]
+    data["model"] = model_encoding[data["model"]]
+    data["transmission"] = transmission_encoding[data["transmission"]]
+    data["color"] = color_encoding[data["color"]]
+    data["body_type"] = bodyType_encoding[data["body_type"]]
+    data["poster_type"] = posterType_encoding[data["poster_type"]]
+    data["fuel_type"] = fuelType_encoding[data["fuel_type"]]
+    data["location"] = location_encoding[data["location"]]
 
-        
-            for attribute in attributes:
-                if attribute not in user_data:
-                    raise ValueError(f"Missing input for feature: {attribute}")
-                if not isinstance(user_data[attribute], type(preprocessed_data[attribute].iloc[0])):
-                    raise ValueError(f"Invalid data type for feature: {attribute}")
+    data["retail"] = float(data["retail"])
+    data["age_of_car"] = float(data["age_of_car"])
+    data["mileage_in_km"] = float(data["mileage_in_km"])
 
-            
-            user_data_df = pd.DataFrame.from_dict([user_data])
-            user_data_df = user_data_df.reindex(columns=attributes)  
-
-        
-            predicted_price = model.predict(user_data_df)[0]
-            response = {"price": predicted_price}
-            return jsonify(response)
-        except ValueError as e:
-            return jsonify({"message": str(e)}), 400
-        except Exception as e:
-            return jsonify({"message": "Internal server error"}), 500
-    else:
-        return jsonify({"message": "Invalid request method"}), 405
+    data_df = pd.DataFrame(data, index=[0])
+    predicted_price = model.predict(data_df) 
+    result = np.exp(predicted_price)
+    return jsonify({"price": result[0]})   
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

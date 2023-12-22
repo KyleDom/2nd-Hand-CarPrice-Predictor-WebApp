@@ -19,5 +19,5 @@ randomForest = RandomForestRegressor(n_estimators=400,max_features=0.91570351759
 
 randomForest.fit(X_train, y_log_train)
 
-with open("model.pkl", "wb") as f:
-    pickle.dump(model, f)
+with open("trained_model.pkl", "wb") as f:
+    pickle.dump(randomForest, f)
