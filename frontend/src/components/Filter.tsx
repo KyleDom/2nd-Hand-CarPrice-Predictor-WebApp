@@ -1,4 +1,4 @@
-import { brand } from "@/data/checkCarPrice";
+import {brandData } from "@/data/checkCarPrice";
 import { FilteredCategoriesProps } from "@/types/filter";
 import React from "react";
 import { BiChevronDown } from "react-icons/bi";
@@ -22,7 +22,7 @@ const FilterByCategory = ({
       </div>
       {isCategoryListOpen && (
         <div className="absolute left-0 mt-2 max-h-52 w-60 overflow-y-auto border border-gray-500 bg-white">
-          {brand.map((option, index) => (
+          {brandData.map((option, index) => (
             <div
               key={index}
               className="cursor-pointer p-2 hover:bg-gray-200"
