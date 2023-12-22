@@ -15,20 +15,21 @@ import {
 const CheckCarPrice = () => {
   const [brand, setBrand] = useState("Select option");
   const [model, setModel] = useState("Select option");
-  const [ageOfCar, setAgeOfCar] = useState("Select option");
-  const [bodyType, setBodyType] = useState("Select option");
+  const [age_of_car, setAgeOfCar] = useState("Select option");
+  const [body_type, setBodyType] = useState("Select option");
   const [color, setColor] = useState("Select option");
   const [location, setLocation] = useState("Select option");
-  const [retailPrice, setRetailPrice] = useState("Select option");
-  const [posterType, setPosterType] = useState("Select option");
-  const [fuelType, setFuelType] = useState("Select option");
+  const [retail, setRetailPrice] = useState("Select option");
+  const [poster_type, setPosterType] = useState("Select option");
+  const [fuel_type, setFuelType] = useState("Select option");
   const [transmission, setTransmission] = useState("Select option");
-  const [mileage, setMileage] = useState("Select option");
+  const [mileage_in_km, setMileage] = useState("Select option");
+  const [predictedPrice, setPredictedPrice] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const apiUrl = "https://jsonplaceholder.typicode.com/posts";
+    const apiUrl = "http://127.0.0.1:5000/predict-price";
 
     try {
       const response = await fetch(apiUrl, {
@@ -39,16 +40,17 @@ const CheckCarPrice = () => {
         body: JSON.stringify({
           brand,
           model,
-          ageOfCar: parseFloat(ageOfCar),
-          bodyType,
+          age_of_car: parseFloat(age_of_car),
+          body_type,
           color,
           location,
-          retailPrice: parseFloat(retailPrice),
-          posterType,
-          fuelType,
+          retail: parseFloat(retail),
+          poster_type,
+          fuel_type,
           transmission,
-          mileage: parseFloat(mileage),
+          mileage_in_km: parseFloat(mileage_in_km),
         }),
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -57,6 +59,12 @@ const CheckCarPrice = () => {
 
       const data = await response.json();
       console.log("Fetched data:", data);
+
+      const data2 = await response.json();
+      // Update state with the predicted price
+      setPredictedPrice(data2.price);
+
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -125,7 +133,7 @@ const CheckCarPrice = () => {
                       name="ageOfCar"
                       placeholder="Enter the age of your car"
                       className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
-                      value={ageOfCar}
+                      value={age_of_car}
                       onChange={(e) => setAgeOfCar(e.target.value)}
                     />
                   </div>
@@ -136,7 +144,7 @@ const CheckCarPrice = () => {
                     Body Type
                     <Dropdown
                       width="80"
-                      label={bodyType}
+                      label={body_type}
                       options={bodyTypeData}
                       onSelect={setBodyType}
                       optionWidth="80"
@@ -174,7 +182,7 @@ const CheckCarPrice = () => {
                       name="retailPrice"
                       placeholder="Enter a number"
                       className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
-                      value={retailPrice}
+                      value={retail}
                       onChange={(e) => setRetailPrice(e.target.value)}
                     />
                   </div>
@@ -183,7 +191,7 @@ const CheckCarPrice = () => {
                     Poster Type
                     <Dropdown
                       width="80"
-                      label={posterType}
+                      label={poster_type}
                       options={["Individual", "Dealer"]}
                       onSelect={setPosterType}
                       optionWidth="80"
@@ -200,7 +208,7 @@ const CheckCarPrice = () => {
                     Fuel Type
                     <Dropdown
                       width="80"
-                      label={fuelType}
+                      label={fuel_type}
                       options={[
                         "Gasoline",
                         "Diesel",
@@ -230,7 +238,7 @@ const CheckCarPrice = () => {
                       name="mileage"
                       placeholder="Enter the mileage in km"
                       className="border border-gray-800 px-2 w-80 py-1 text-gray-800"
-                      value={mileage}
+                      value={mileage_in_km}
                       onChange={(e) => setMileage(e.target.value)}
                     />
                   </div>
@@ -249,6 +257,7 @@ const CheckCarPrice = () => {
                       ₱1,600,200
                     </div>
                   </div>
+
                   <button
                     type="submit"
                     className="cursor-pointer hover:bg-[rgb(255,106,0)] mt-5 items-center rounded-lg h-12 w-40 bg-[#FF7A00] text-white ml-10 font-semibold"
