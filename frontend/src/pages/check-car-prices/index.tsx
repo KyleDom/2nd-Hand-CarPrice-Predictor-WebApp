@@ -39,15 +39,15 @@ const CheckCarPrice = () => {
         body: JSON.stringify({
           brand,
           model,
-          ageOfCar,
+          ageOfCar: parseFloat(ageOfCar),
           bodyType,
           color,
           location,
-          retailPrice,
+          retailPrice: parseFloat(retailPrice),
           posterType,
           fuelType,
           transmission,
-          mileage,
+          mileage: parseFloat(mileage),
         }),
       });
 
