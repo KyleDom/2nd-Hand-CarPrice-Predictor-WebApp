@@ -11,6 +11,7 @@ import {
   modelData,
   transmissionData,
 } from "@/data/checkCarPrice";
+import { isFormComplete } from "@/utils/formUtils";
 
 const CheckCarPrice = () => {
   const [brand, setBrand] = useState("Select option");
@@ -24,13 +25,30 @@ const CheckCarPrice = () => {
   const [fuel_type, setFuelType] = useState("Select option");
   const [transmission, setTransmission] = useState("Select option");
   const [mileage_in_km, setMileage] = useState("Select option");
-  const [predictedPrice, setPredictedPrice] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const apiUrl = "http://127.0.0.1:5000/predict-price";
+    const formComplete = isFormComplete(
+      brand,
+      model,
+      age_of_car,
+      body_type,
+      color,
+      location,
+      retail,
+      poster_type,
+      fuel_type,
+      transmission,
+      mileage_in_km
+    );
 
+    if (!formComplete) {
+      console.log("Please complete all selections before submitting.");
+      return;
+    }
+
+    const apiUrl = "https://jsonplaceholder.typicode.com/posts";
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -50,7 +68,6 @@ const CheckCarPrice = () => {
           transmission,
           mileage_in_km: parseFloat(mileage_in_km),
         }),
-        credentials: "include",
       });
 
       if (!response.ok) {
@@ -59,12 +76,6 @@ const CheckCarPrice = () => {
 
       const data = await response.json();
       console.log("Fetched data:", data);
-
-      const data2 = await response.json();
-      // Update state with the predicted price
-      setPredictedPrice(data2.price);
-
-
     } catch (error) {
       console.error("Error fetching data:", error);
     }
